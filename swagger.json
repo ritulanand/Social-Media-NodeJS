@@ -1,0 +1,77 @@
+{
+
+    "openapi":"3.0.0",
+    "info":{
+        "version":"1.0.0" , 
+        "description":"API for Social Media application",
+        "title":"Socai media Api"
+    },
+    "servers":[
+        {
+            "url":"http://localhost:3200"
+        }
+    ],
+    "components":{
+        "securitySchemes":{
+            "JWT":{
+                "in":"header",
+                "name":"Authorization",
+                "type":"apiKey"
+            }
+        }
+    },
+   
+    "paths":{
+        "/api/posts/all":{
+            "get":{
+                "tags":["Posts"],
+                "summary":"Get Posts",
+                "description":"User will get all posts",
+                "security":[
+                    {"JWT": {}}
+                ],
+                "responses":{
+                    "200":{
+                        "description":"ok"
+                        },
+                        "401":{
+                            "description":"Unauthorized"
+                        }
+            }
+        }
+    },
+        "/api/signin":{
+            "post":{
+                "tags":["Users"],
+                "summary":"Login",
+                "description":"User login to get token",
+                "requestBody":{
+                    "content":
+                    { 
+                        "application/json":{
+            
+                        "schema":{
+                            "type":"object",
+                            "properties":{
+                                "email":{
+                                    "type":"string"
+                                },
+                                "password":{
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    }}
+                },
+                "responses":{
+                    "200":{
+                        "description":"ok"
+                        },
+                        "400":{
+                            "description":"Incorrect Credentials"
+                        }
+            }
+        }
+    }
+    }
+}
