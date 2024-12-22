@@ -92,4 +92,54 @@ export class postItemsController {
     console.log("get all posts", itemsarhive);
     return res.status(200).send(itemsarhive);
   }
+
+  postdraft(req, res) {
+    console.log("query archive staus", req.query);
+    const { status } = req.query;
+    const postId = Number(req.query.postId);
+    const userID = req.userID;
+    console.log("req status", postId, userID);
+    var repoststatus = postModel.draftpost(postId, userID, status);
+    console.log("status post", repoststatus);
+    // res.status(200).send("Post is archived");
+    if (repoststatus === "draft not found") {
+      return res.status(404).send("post is not draft");
+    } else {
+      return res.status(200).send("post is draft");
+    }
+  }
+
+  getdraftposts(req, res) {
+    const itemsdraft = postModel.getdraftall();
+    console.log("get all draft posts", itemsdraft);
+    return res.status(200).send(itemsdraft);
+  }
+
+  postPublished(req, res) {
+    console.log("query  publish", req.query);
+    const { status } = req.query;
+    const postId = Number(req.query.postId);
+    const userID = req.userID;
+    console.log("req status", postId, userID);
+    var repostpublish = postModel.publishpost(postId, userID, status);
+    console.log("status post", repostpublish);
+    // res.status(200).send("Post is archived");
+    if (repostpublish === "publish not found") {
+      return res.status(404).send("post is not publish");
+    } else {
+      return res.status(200).send("post is publish");
+    }
+  }
+
+  getPublishposts(req, res) {
+    const itemspublished = postModel.getpublishall();
+    console.log("get all publish posts", itemspublished);
+    return res.status(200).send(itemspublished);
+  }
+
+  getByCreated(req, res) {
+    const itembysorted = postModel.sortByrecentDate();
+    console.log("sort", itembysorted);
+    return res.status(200).send(itembysorted);
+  }
 }

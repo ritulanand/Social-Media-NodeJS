@@ -72,6 +72,43 @@
                         }
             }
         }
+    },
+
+    "/api/signup":{
+        "post":{
+            "tags":["Users"],
+            "summary":"SignUp",
+            "description":"User to sign up",
+            "requestBody":{
+                "content":
+                { 
+                    "application/json":{
+        
+                    "schema":{
+                        "type":"object",
+                        "properties":{
+                            "name" : {
+                                "type" : "string"
+                            },
+                            "email":{
+                                "type":"string"
+                            },
+                            "password":{
+                                "type":"string"
+                            },
+                            "type" : {
+                                "type" : "string"
+                            }
+                        }
+                    }
+                }}
+            },
+            "responses":{
+                "200":{
+                    "description":"ok"
+                    }
+        }
     }
+}
     }
 }

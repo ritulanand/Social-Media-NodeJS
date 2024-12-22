@@ -1,12 +1,22 @@
 //productId , userID , quantity
 
 export default class postModel {
-  constructor(postId, userId, caption, imageUrl, isArchived = false) {
+  constructor(
+    postId,
+    userId,
+    caption,
+    imageUrl,
+    isArchived = false,
+    createdAt = new Date()
+    // status = "draft"
+  ) {
     this.postId = postId;
     this.userId = userId;
     this.caption = caption;
     this.imageUrl = imageUrl;
     this.isArchived = isArchived;
+    this.createdAt = createdAt;
+    // this.status = status;
     // this.id=id;
   }
   static add(postId, userId, caption, imageUrl) {
@@ -90,6 +100,50 @@ export default class postModel {
     const archivedPosts = post.filter((post) => post.isArchived == true);
     console.log("archhh", archivedPosts);
     return archivedPosts;
+  }
+
+  static draftpost(postId, userId, status = "draft") {
+    const poststatusIndex = post.findIndex(
+      (i) => i.postId == postId && i.userId == userId
+    );
+    console.log("draft post", poststatusIndex);
+    if (poststatusIndex !== -1) {
+      post[poststatusIndex].status = status;
+      console.log("draft update at index", post[poststatusIndex]);
+      return post[poststatusIndex];
+    } else {
+      return "draft not found";
+    }
+  }
+
+  static getdraftall() {
+    const draftPosts = post.filter((post) => post.status == "draft");
+    console.log("draft all", draftPosts);
+    return draftPosts;
+  }
+
+  static publishpost(postId, userId, status = "publish") {
+    const postpublishIndex = post.findIndex(
+      (i) => i.postId == postId && i.userId == userId
+    );
+    console.log("draft post", postpublishIndex);
+    if (postpublishIndex !== -1) {
+      post[postpublishIndex].status = status;
+      console.log("draft update at index", post[postpublishIndex]);
+      return post[postpublishIndex];
+    } else {
+      return "publish not found";
+    }
+  }
+
+  static getpublishall() {
+    const publishAll = post.filter((post) => post.status == "publish");
+    console.log("publish all", publishAll);
+    return publishAll;
+  }
+
+  static sortByrecentDate() {
+    return post.sort((a, b) => b.createdAt - a.createdAt);
   }
 }
 
