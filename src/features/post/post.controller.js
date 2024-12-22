@@ -40,7 +40,7 @@ export class postItemsController {
     console.log("update", req.body);
     const item = postModel.updatepost(postId, userId, caption, imageUrl);
     console.log("update", item);
-    if (!item) {
+    if (item === "not found") {
       return res.status(400).send("Uff sorry, Post Not Found !!");
     } else {
       return res.status(200).send(item);
@@ -71,5 +71,25 @@ export class postItemsController {
     }
   }
 
-  
+  postArchved(req, res) {
+    console.log("query archive", req.query);
+    const { isArchived } = req.query;
+    const postId = Number(req.query.postId);
+    const userID = req.userID;
+    console.log("req ar", postId, userID);
+    var resarchive = postModel.archivepost(postId, userID, isArchived);
+    console.log("post archived", resarchive);
+    // res.status(200).send("Post is archived");
+    if (resarchive === "not found") {
+      return res.status(404).send("post is not archived");
+    } else {
+      return res.status(200).send("post is archived");
+    }
+  }
+
+  getarchiveposts(req, res) {
+    const itemsarhive = postModel.getarchiveall();
+    console.log("get all posts", itemsarhive);
+    return res.status(200).send(itemsarhive);
+  }
 }

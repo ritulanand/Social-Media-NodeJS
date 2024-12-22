@@ -1,11 +1,12 @@
 //productId , userID , quantity
 
 export default class postModel {
-  constructor(postId, userId, caption, imageUrl) {
+  constructor(postId, userId, caption, imageUrl, isArchived = false) {
     this.postId = postId;
     this.userId = userId;
     this.caption = caption;
     this.imageUrl = imageUrl;
+    this.isArchived = isArchived;
     // this.id=id;
   }
   static add(postId, userId, caption, imageUrl) {
@@ -18,7 +19,7 @@ export default class postModel {
   }
   static updatepost(postId, userId, caption, imageUrl) {
     const itemIndex = post.findIndex(
-      (i) => i.postId == postId || i.userId == userId
+      (i) => i.postId == postId && i.userId == userId
     );
     console.log("update post", itemIndex);
     if (itemIndex !== -1) {
@@ -57,6 +58,38 @@ export default class postModel {
   static filtercaption(caption) {
     console.log("caption model", caption);
     return post.filter((c) => c.caption === caption);
+  }
+
+  static archivepost(postId, userId, isArchived) {
+    const archiveIndex = post.findIndex(
+      (i) => i.postId == postId && i.userId == userId
+    );
+    console.log("archive post", archiveIndex);
+    if (archiveIndex !== -1) {
+      post[archiveIndex].isArchived = Boolean(isArchived);
+      console.log("archived update at index", post[archiveIndex]);
+      return post[archiveIndex];
+    } else {
+      return "not found";
+    }
+    // console.log("archive", postId, userId, isArchived);
+    // const postArchive = new postModel(
+    //   postId,
+    //   userId,
+    //   caption,
+    //   imageUrl,
+    //   isArchived
+    // );
+    // postArchive.isArchived = true;
+    // post.push(postArchive);
+    // console.log("post item", post);
+    // return postArchive;
+  }
+
+  static getarchiveall() {
+    const archivedPosts = post.filter((post) => post.isArchived == true);
+    console.log("archhh", archivedPosts);
+    return archivedPosts;
   }
 }
 
