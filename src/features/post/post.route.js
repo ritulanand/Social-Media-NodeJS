@@ -1,11 +1,9 @@
 import express from "express";
 import { postItemsController } from "./post.controller.js";
-// import { upload } from "../../middleware/fileUpload.middleware.js";
 
 const postRouter = express.Router();
 
 const postItemsControllers = new postItemsController();
-//localhost:3200/api/cartItems?productId=1&quantity=2
 postRouter.get("/filter", postItemsControllers.filterByCaption);
 postRouter.put("/archived-post", postItemsControllers.postArchved);
 postRouter.get("/archived-posts", postItemsControllers.getarchiveposts);
